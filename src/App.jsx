@@ -1,22 +1,42 @@
 import Button from "./components/Button";
+import { MdAccountBalance, MdEmojiEvents, MdHelp, MdPermMedia, MdPinDrop } from "react-icons/md";
 
 const App = () => {
+    const handleClick = () => {
+        console.log('Click!');
+    };
+
     return (
         <div>
             <div>
-                <Button success outline>Click me!</Button>
+                <Button success outline className='mb-5' onClick={handleClick}>
+                    <MdAccountBalance />
+                    Click me!
+                </Button>
             </div>
             <div>
-                <Button danger rounded>Buy Now!</Button>
+                <Button danger rounded onMouseEnter={handleClick}>
+                    <MdEmojiEvents />
+                    Buy Now!
+                </Button>
             </div>
             <div>
-                <Button warning>See Now!</Button>
+                <Button warning onMouseLeave={handleClick}>
+                    <MdHelp />
+                    See Now!
+                </Button>
             </div>
             <div>
-                <Button secondary>Hello</Button>
+                <Button secondary>
+                    <MdPermMedia />
+                    Hello
+                </Button>
             </div>
             <div>
-                <Button primary>UP Down</Button>
+                <Button primary>
+                    <MdPinDrop />
+                    UP Down
+                </Button>
             </div>
         </div>
     );
