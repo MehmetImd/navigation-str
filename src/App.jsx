@@ -1,45 +1,27 @@
-import Button from "./components/Button";
-import { MdAccountBalance, MdEmojiEvents, MdHelp, MdPermMedia, MdPinDrop } from "react-icons/md";
+import Accordion from "./components/Accordion";
 
 const App = () => {
-    const handleClick = () => {
-        console.log('Click!');
-    };
-
+    const items = [
+        {
+            id: 1,
+            label: 'Can I use React on a project?',
+            content: 'Tested and optimized for Vercel Edge, Cloudflare Workers and Fastly Edge.'
+        },
+        {
+            id: 2,
+            label: 'Can I use Javascript on a project?',
+            content: 'Tested and optimized for Vercel Edge, Cloudflare Workers and Fastly Edge.'
+        },
+        {
+            id: 3,
+            label: 'Can I use Python on a project?',
+            content: 'Tested and optimized for Vercel Edge, Cloudflare Workers and Fastly Edge.'
+        },
+    ];
+    
     return (
-        <div>
-            <div>
-                <Button success outline className='mb-5' onClick={handleClick}>
-                    <MdAccountBalance />
-                    Click me!
-                </Button>
-            </div>
-            <div>
-                <Button danger rounded onMouseEnter={handleClick}>
-                    <MdEmojiEvents />
-                    Buy Now!
-                </Button>
-            </div>
-            <div>
-                <Button warning onMouseLeave={handleClick}>
-                    <MdHelp />
-                    See Now!
-                </Button>
-            </div>
-            <div>
-                <Button secondary>
-                    <MdPermMedia />
-                    Hello
-                </Button>
-            </div>
-            <div>
-                <Button primary>
-                    <MdPinDrop />
-                    UP Down
-                </Button>
-            </div>
-        </div>
-    );
+        <Accordion items={items}/>
+    )
 };
 
 export default App;
