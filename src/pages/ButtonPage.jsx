@@ -2,9 +2,7 @@ import Button from "../components/Button.jsx";
 import { MdAccountBalance, MdEmojiEvents, MdHelp, MdPermMedia, MdPinDrop } from "react-icons/md";
 
 const ButtonPage = () => {
-    const handleClick = () => {
-        console.log('Click!');
-    };
+    const handleClick = () => {};
 
     return (
         <div>
