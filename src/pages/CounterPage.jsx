@@ -1,17 +1,112 @@
+import { useReducer } from 'react';
 import Button from '../components/Button';
-import useCounter from '../hooks/use-counter';
+import Panel from '../components/Panel';
+import { produce } from 'immer';
 
-const CounterPage = ({ initialCount }) => {
-    const { count, increment } = useCounter(initialCount);
+const INCREMENT_COUNT = 'increment';
+const CHANGE_VALUE_TO_ADD = 'change_value_to_add';
+const DECREMENT_COUNT = 'decrement';
+const ADD_VALUE_TO_COUNT = 'add_value_to_count'
 
-    return (
-        <div>
-            <h1>Count is {count}</h1>
-            <Button onClick={increment}>
-                Increment
-            </Button>
-        </div>
-    )
+const reducer = (state, action) => {
+    switch (action.type) {
+        case INCREMENT_COUNT:
+            state.count = state.count + 1;
+            return;
+        case DECREMENT_COUNT:
+            state.count = state.count - 1;
+            return;
+        case ADD_VALUE_TO_COUNT:
+            state.count = state.count + state.valueToAdd;
+            state.valueToAdd = 0;
+            return;
+        case CHANGE_VALUE_TO_ADD:
+            state.valueToAdd = action.payload;
+            return;
+        default:
+            return;
+    }
+    // throw Error('unexpected action type:' + action.type);
+
+    // if (action.type === INCREMENT_COUNT) {
+    //     return {
+    //         ...state,
+    //         count: state.count + 1,
+    //     };
+    // };
+
+    // if (action.type === CHANGE_VALUE_YO_ADD) {
+    // return {
+    //     ...state,
+    //     valueToAdd: action.payload,
+    // };
+    // };
+
+    // return state;
 };
 
-export default CounterPage;
+const CounterPage = ({ initialCount }) => {
+    // const [count, setCount] = useState(initialCount);
+    // const [valueToAdd, setValueToAdd] = useState(0);
+
+    const [state, dispatch] = useReducer(produce(reducer), {
+        count: initialCount,
+        valueToAdd: 0,
+    });
+
+    console.log(state);
+
+    const increment = () => {
+        dispatch({
+            type: INCREMENT_COUNT,
+        });
+    };
+
+    const decrement = () => {
+        dispatch({
+            type: DECREMENT_COUNT,
+        });
+    };
+
+    const handleChange = (event) => {
+        const value = parseInt(event.target.value) || 0;
+
+        dispatch({
+            type: CHANGE_VALUE_TO_ADD,
+            payload: value,
+        });
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        dispatch({
+            type: ADD_VALUE_TO_COUNT,
+        });
+    };
+        return (
+            <Panel className='m-3'>
+                <h1 className='text-lg'>Count is {state.count}</h1>
+                <div className='flex flex-row'>
+                    <Button onClick={increment}>
+                        Increment
+                    </Button>
+
+                    <Button onClick={decrement}>
+                        Decrement
+                    </Button>
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                    <label>Add a lot!</label>
+                    <input
+                        type="number"
+                        value={state.valueToAdd || ""}
+                        onChange={handleChange}
+                        className='p-1 m-3 bg-gray-50 border border-gray-300' />
+                    <Button>Add it!</Button>
+                </form>
+            </Panel>
+        )
+    };
+
+    export default CounterPage;
